@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, NavLink } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Jokes from "./components/Jokes";
 import "./App.css";
 import styled from "styled-components";
 
@@ -48,6 +49,7 @@ class App extends Component {
         <div>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/jokes" component={Jokes} />
         </div>
       </div>
     );
