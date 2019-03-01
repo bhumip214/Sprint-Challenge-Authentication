@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const tokenService = require("./token-service");
 
 // quickly see what this file exports
 module.exports = {
