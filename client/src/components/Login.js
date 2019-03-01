@@ -9,10 +9,15 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ErrorMessage = styled.p`
   color: red;
+`;
+const H1 = styled.h1`
+  text-align: center;
+  font-family: "Times New Roman", cursive;
 `;
 
 const styles = theme => ({
@@ -92,6 +97,7 @@ class Login extends React.Component {
     return (
       <main className={classes.main}>
         <CssBaseline />
+        <H1> Jokes App </H1>
 
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
@@ -128,11 +134,19 @@ class Login extends React.Component {
               type="submit"
               fullWidth
               variant="contained"
-              color="bluegrey"
+              color="secondary"
               className={classes.submit}
             >
               Login
             </Button>
+            <div>
+              <p>
+                Don't have an account?
+                <span className={classes.pushRight}>
+                  <Link to="/register">Register</Link>
+                </span>
+              </p>
+            </div>
           </form>
         </Paper>
       </main>

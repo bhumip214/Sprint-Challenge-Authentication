@@ -2,13 +2,34 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-const JokesWrapper = styled.div`
-  text-align: center;
-  padding-top: 20px;
-`;
-
 const List = styled.div`
   padding: 0 100px;
+`;
+
+const NavBar = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 100px;
+  margin-bottom: 40px;
+  background-color: black;
+  color: white;
+`;
+
+const Heading = styled.div`
+  flex: 1;
+  font-family: "Times New Roman", cursive;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: white;
+  color: red;
+  border-radius: 5px;
+  font-weight: bold;
+  &:hover {
+    background-color: red;
+    color: white;
+  }
 `;
 
 class Jokes extends React.Component {
@@ -34,10 +55,21 @@ class Jokes extends React.Component {
       });
   }
 
+  logout = () => {
+    localStorage.removeItem("jwt");
+    this.props.history.push("/login");
+  };
+
   render() {
     return (
-      <JokesWrapper>
-        <h1> List of Jokes </h1>
+      <div>
+        <NavBar>
+          <Heading>
+            <h1> Jokes </h1>
+          </Heading>
+          <Button onClick={this.logout}> LOGOUT </Button>
+        </NavBar>
+
         <>
           {this.state.jokes.map(joke => {
             return (
@@ -48,7 +80,7 @@ class Jokes extends React.Component {
             );
           })}
         </>
-      </JokesWrapper>
+      </div>
     );
   }
 }
