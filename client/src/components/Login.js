@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -21,6 +23,7 @@ const styles = theme => ({
     display: "block", // Fix IE 11 issue.
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
+
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 400,
       marginLeft: "auto",
@@ -28,7 +31,7 @@ const styles = theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 2,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -49,7 +52,7 @@ const styles = theme => ({
   }
 });
 
-class Register extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,15 +72,14 @@ class Register extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const endpoint = "http://localhost:3300/api/register";
-
+    const endpoint = "http://localhost:3300/api/login";
     axios
       .post(endpoint, {
         username: this.state.username,
         password: this.state.password
       })
       .then(res => {
-        //console.log(res.data);
+        // console.log(res.data);
         localStorage.setItem("jwt", res.data.token);
         this.props.history.push("/jokes");
       })
@@ -95,14 +97,13 @@ class Register extends React.Component {
 
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Register
+            Login
           </Typography>
 
           <form onSubmit={this.handleSubmit} className={classes.form}>
             {this.state.errorMessage && (
               <ErrorMessage>* {this.state.errorMessage}</ErrorMessage>
             )}
-
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input
@@ -110,6 +111,7 @@ class Register extends React.Component {
                 name="username"
                 value={this.state.username}
                 onChange={this.handleChanges}
+                autoComplete="email"
                 autoFocus
               />
             </FormControl>
@@ -120,6 +122,7 @@ class Register extends React.Component {
                 value={this.state.password}
                 onChange={this.handleChanges}
                 type="password"
+                autoComplete="current-password"
               />
             </FormControl>
 
@@ -130,7 +133,7 @@ class Register extends React.Component {
               color="bluegrey"
               className={classes.submit}
             >
-              Register
+              Login
             </Button>
           </form>
         </Paper>
@@ -139,8 +142,8 @@ class Register extends React.Component {
   }
 }
 
-Register.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Register);
+export default withStyles(styles)(Login);
