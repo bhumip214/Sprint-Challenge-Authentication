@@ -38,8 +38,35 @@ async function register(req, res) {
   }
 }
 
-function login(req, res) {
+async function login(req, res) {
   // implement user login
+  try {
+    const { username, password } = req.body;
+    if (username && password) {
+      const user = await db("users")
+        .where({ username })
+        .first();
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = tokenService.generateToken(user); // new
+
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          token
+        });
+      } else {
+        res.status(401).json({ message: "You shall not pass!" });
+      }
+    } else {
+      res.status(400).json({
+        errorMessage:
+          "Please provide correct username and password to register."
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "There was an error while logging in."
+    });
+  }
 }
 
 function getJokes(req, res) {
